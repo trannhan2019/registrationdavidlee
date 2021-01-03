@@ -120,6 +120,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1mUuanAhiHKan3cPQn4IICnumvu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -158,7 +159,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1609560556602</updated>
-      <workItem from="1609560560640" duration="19033000" />
+      <workItem from="1609560560640" duration="19632000" />
     </task>
     <servers />
   </component>
