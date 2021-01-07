@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', 'UserController@getRegistration');
 //Route::post('/','UserController@postRegistration')->name('register');
 
-Route::get('success','UserController@getSuccess');
+//Route::get('success','UserController@getSuccess');
 
 
 Route::get('/', function () {
