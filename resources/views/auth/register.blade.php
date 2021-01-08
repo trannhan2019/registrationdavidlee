@@ -39,6 +39,13 @@
                         @enderror
                         <input type="text" placeholder="Name" class="reg-input" name="name" value="{{ old('name') }}">
 
+                        @error('username')
+                            <p class="text-danger mb-0" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </p>
+                        @enderror
+                        <input type="text" placeholder="Username" class="reg-input" name="username" value="{{ old('username') }}">
+
                         @error('email')
                             <p class="text-danger mb-0" role="alert">
                                 <strong>{{ $message }}</strong>

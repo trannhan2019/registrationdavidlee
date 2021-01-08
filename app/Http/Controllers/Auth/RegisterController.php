@@ -41,6 +41,21 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+
+        /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm(Request $request)
+    {
+        if ($request->has('ref')) {
+            session(['referrer' => $request->query('ref')]);
+        }
+
+        return view('auth.register');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -52,11 +67,28 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'unique:users', 'alpha_dash', 'min:3', 'max:30'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => ['required', 'same:password'],
             'accept'=>'required',
             'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha],
         ]);
+    }
+
+        /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        if ($user->referrer !== null) {
+            Notification::send($user->referrer, new ReferrerBonus($user));
+        }
+
+        return redirect($this->redirectPath());
     }
 
     /**
@@ -67,9 +99,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $referrer = User::whereUsername(session()->pull('referrer'))->first();
         return User::create([
             'name' => $data['name'],
+            'username'    => $data['username'],
             'email' => $data['email'],
+            'referrer_id' => $referrer ? $referrer->id : null,
             'password' => Hash::make($data['password']),
         ]);
     }
